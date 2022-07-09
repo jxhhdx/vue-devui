@@ -51,7 +51,7 @@ describe('d-status', () => {
   });
 
   it('slot', () => {
-    const statusText = 'vue3 devui';
+    const statusText = 'vue devui';
     const wrapper = mount(Status, {
       slots: {
         default: statusText
