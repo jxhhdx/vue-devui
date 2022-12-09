@@ -46,6 +46,7 @@ export const blockPlugin = (md: MarkdownIt) => {
             desc="${encodeURIComponent(localMd.render(description))}"
             targetFilePath="${targetFilePath}"
           >
+          ${content ? `<!--vue-demo:${content}:vue-demo-->` : ''}
         `;
       }
       return '</demo>';
