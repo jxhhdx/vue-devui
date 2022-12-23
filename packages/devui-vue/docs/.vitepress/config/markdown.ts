@@ -1,6 +1,5 @@
 import { blockPlugin } from '../plugins/block-plugin';
-import { codePlugin } from '../plugins/code-plugin';
-import { renderPlugin } from '../plugins/render-plugin';
+import { renderPlugin, codePlugin } from 'vitepress-theme-demoblock'
 
 const options = { cssPreprocessor: 'scss' };
 const markdown = {

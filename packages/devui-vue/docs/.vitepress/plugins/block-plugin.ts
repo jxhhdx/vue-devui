@@ -4,19 +4,12 @@ import { pathExistsSync } from 'path-exists';
 import MarkdownIt from 'markdown-it';
 import mdContainer from 'markdown-it-container';
 import highlight from '../utils/highlight';
+import parseInstruct from '../utils/parseInstruct';
 
 const localMd = MarkdownIt();
-/**
- * Format Path
- * example： button/size => button/demo/size
- */
-const formatPath = (sourceFile: string) => {
-  const middleArr = sourceFile.split('/');
-  middleArr.splice(1, 0, 'demo');
-  return middleArr.join('/');
-}
 
 export const blockPlugin = (md: MarkdownIt) => {
+  let conponentType = 'demo';
   md.use(mdContainer, 'demo', {
     validate(params) {
       return params.trim().match(/^demo\s*(.*)$/)
@@ -29,18 +22,23 @@ export const blockPlugin = (md: MarkdownIt) => {
         let content = tokens[idx + 1].type === 'fence' ? tokens[idx + 1].content : '';
         const sourceFileToken = tokens[idx + 2]
         const sourceObject = sourceFileToken.children?.[0] || {};
-        const { content: sourceFile } = sourceObject;
+        const { content: instruct } = sourceObject;
         let targetFilePath = '';
+        conponentType = 'demo';
         // 自定义 demo，从外部引入
-        if (!content && sourceFile && sourceFileToken.type === 'inline') {
-          const curSourceFile = formatPath(sourceFile);
-          targetFilePath = path.resolve(__dirname, '../../../devui', `${curSourceFile}.vue`);
+        if (!content && instruct && sourceFileToken.type === 'inline') {
+          const { filePathSuffix, useCodeBox } = parseInstruct(instruct);
+          if (useCodeBox) {
+            // 使用 code-box 组件
+            conponentType = 'code-box';
+          }
+          targetFilePath = path.resolve(__dirname, '../../../devui', `${filePathSuffix}.vue`);
           if (pathExistsSync(targetFilePath)) {
             content = fs.readFileSync(targetFilePath, 'utf-8');
           }
         }
         return `
-          <demo 
+          <${conponentType} 
             sourceCode="${md.utils.escapeHtml(content)}"
             lightCode="${encodeURIComponent(highlight(content, 'vue'))}"
             desc="${encodeURIComponent(localMd.render(description))}"
@@ -49,7 +47,7 @@ export const blockPlugin = (md: MarkdownIt) => {
           ${content ? `<!--vue-demo:${content}:vue-demo-->` : ''}
         `;
       }
-      return '</demo>';
+      return `</${conponentType}>`;
     },
   })
 }

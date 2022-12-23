@@ -10,7 +10,7 @@
 
 :::demo 通过`variant`设置按钮形态，目前支持`solid`、`outline`、`text`三种形态，默认为`outline`。
 
-button/shape
+button/demo/shape --use-code-box
 
 :::
 
@@ -18,7 +18,7 @@ button/shape
 
 :::demo 通过`color`设置按钮的主题色，目前支持`primary`、`secondary`、`danger`三种主题色，默认为`secondary`。<br>注意：如果`variant`设置成`solid`，则默认使用`primary`主题色。
 
-button/theme
+button/demo/theme
 
 :::
 
@@ -26,7 +26,7 @@ button/theme
 
 :::demo 通过`size`设置按钮尺寸，支持`sm`、`md`、`lg`三种类型的尺寸，默认为`md`。
 
-button/size
+button/demo/size
 
 :::
 
@@ -34,7 +34,7 @@ button/size
 
 :::demo 通过`disabled`参数设置按钮禁用状态。
 
-button/disable
+button/demo/disable
 
 :::
 
@@ -42,7 +42,7 @@ button/disable
 
 :::demo 通过`loading`参数设置按钮加载中状态。
 
-button/loading
+button/demo/loading
 
 :::
 
@@ -50,7 +50,7 @@ button/loading
 
 :::demo
 
-button/icon
+button/demo/icon
 
 :::
 
@@ -60,7 +60,7 @@ button/icon
 
 :::demo
 
-button/buttonGroup
+button/demo/buttonGroup
 
 :::
 
