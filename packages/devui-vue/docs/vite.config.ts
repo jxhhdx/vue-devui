@@ -8,6 +8,9 @@ export default defineConfig({
     alias: [{ find: '@devui', replacement: resolve(__dirname, '../devui') }],
   },
   plugins: [vueJsx({}), svgLoader()],
+  define: {
+    'process.env': {}
+  },
   optimizeDeps: {
     exclude: ['lodash-es', 'mitt', 'async-validator', 'css-vars-ponyfill', 'rxjs', '@vueuse/core', '@floating-ui/dom', 'vue-router'],
   },

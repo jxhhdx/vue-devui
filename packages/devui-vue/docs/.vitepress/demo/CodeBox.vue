@@ -1,7 +1,7 @@
 <template>
   <div class="code-box my-0">
     <div class="code-box__wrapper">
-      <div class="code-box__left" >
+      <div class="code-box__left">
         <Preview :value="code" />
       </div>
       <div class="code-box__right">
@@ -14,20 +14,21 @@
 <script setup>
 import CodeMirror from '../component/CodeMirror/index.vue';
 import Preview from '../component/Preview/index.vue';
-// import { Store, ReplStore, SFCOptions } from '../utils/store';
 import { debounce } from '../utils/utils';
-import { useAttrs, ref } from 'vue';
+import { useAttrs, ref, defineAsyncComponent } from 'vue';
 const attrs = useAttrs();
 const code = ref(decodeURIComponent(attrs.sourceCode));
-// const store = new ReplStore();
-// store.options = props.sfcOptions;
-// store.init();
-
-// provide('store', store);
 
 const onChange = debounce((val) => {
   code.value = val;
 }, 250);
+
+if (import.meta.hot) {
+  console.log(import.meta);
+  import.meta.hot.on('demo-update', () => {
+    console.log('demo-update');
+  });
+}
 
 </script>
 
@@ -53,8 +54,9 @@ export default {
 
 .code-box__left {
   width: 50%;
-  padding: 20px;
+  padding: 16px;
 }
+
 .code-box__right {
   width: 50%;
   background-color: #f9f9f9;

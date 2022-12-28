@@ -3,8 +3,7 @@
 </template>
   
 <script setup lang="ts">
-import { ref, onMounted, watchEffect, inject } from 'vue';
-import { debounce } from '../../utils/utils';
+import { ref, onMounted, watchEffect } from 'vue';
 import CodeMirror from './codemirror';
 
 export interface Props {
@@ -22,7 +21,6 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<(e: 'change', value: string) => void>()
 
 const el = ref()
-const needAutoResize = inject('autoresize')
 
 onMounted(() => {
   const addonOptions = {
@@ -61,14 +59,6 @@ onMounted(() => {
     editor.refresh()
   }, 50)
 
-  if (needAutoResize) {
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        editor.refresh()
-      })
-    )
-  }
 })
 </script>
   
